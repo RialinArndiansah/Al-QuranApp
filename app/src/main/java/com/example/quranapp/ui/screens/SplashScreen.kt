@@ -1,6 +1,7 @@
 package com.example.quranapp.ui.screens
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,43 +24,53 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun AppSplashScreen(navController: NavHostController) {
-    // Animasi untuk logo
     val logoAlphaAnim = remember { Animatable(0f) }
     val logoScaleAnim = remember { Animatable(0.5f) }
-    val logoTranslationYAnim = remember { Animatable(-300f) }
-
-    // Animasi untuk latar belakang
+    val logoTranslationYAnim = remember { Animatable(-200f) }
     val bgAlphaAnim = remember { Animatable(0f) }
-    val bgScaleAnim = remember { Animatable(1.2f) }
+    val bgScaleAnim = remember { Animatable(1.1f) }
 
-    // Jalankan animasi saat layar splash dimulai
     LaunchedEffect(true) {
-        // Animasi latar belakang
+        // Animate background
         bgAlphaAnim.animateTo(
             targetValue = 1f,
-            animationSpec = tween(durationMillis = 1200)
+            animationSpec = tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing
+            )
         )
         bgScaleAnim.animateTo(
             targetValue = 1f,
-            animationSpec = tween(durationMillis = 1200)
+            animationSpec = tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing
+            )
         )
 
-        // Animasi logo
+        // Animate logo
         logoAlphaAnim.animateTo(
             targetValue = 1f,
-            animationSpec = tween(durationMillis = 1000)
+            animationSpec = tween(
+                durationMillis = 400,
+                easing = FastOutSlowInEasing
+            )
         )
         logoScaleAnim.animateTo(
             targetValue = 1f,
-            animationSpec = tween(durationMillis = 1000)
+            animationSpec = tween(
+                durationMillis = 400,
+                easing = FastOutSlowInEasing
+            )
         )
         logoTranslationYAnim.animateTo(
             targetValue = 0f,
-            animationSpec = tween(durationMillis = 1000)
+            animationSpec = tween(
+                durationMillis = 400,
+                easing = FastOutSlowInEasing
+            )
         )
 
-        // Tunggu 1 detik setelah animasi selesai
-        delay(1000)
+        delay(300)
         navController.navigate("home") {
             popUpTo("splash") { inclusive = true }
         }
@@ -69,9 +80,8 @@ fun AppSplashScreen(navController: NavHostController) {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF00796B)) // Warna cadangan jika gambar gagal dimuat
+            .background(Color(0xFF00796B))
     ) {
-        // Latar belakang dengan animasi
         Image(
             painter = painterResource(id = R.drawable.bg2),
             contentDescription = null,
@@ -82,7 +92,6 @@ fun AppSplashScreen(navController: NavHostController) {
             contentScale = ContentScale.Crop
         )
 
-        // Logo dengan animasi
         Image(
             painter = painterResource(id = R.drawable.logoaplikasi),
             contentDescription = "App Logo",

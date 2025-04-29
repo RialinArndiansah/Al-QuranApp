@@ -53,7 +53,7 @@ fun ReadingHistoryScreen(navController: NavHostController) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(100.dp)
+                .height(125.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.headerbaground),

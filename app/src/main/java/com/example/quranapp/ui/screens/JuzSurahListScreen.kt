@@ -41,7 +41,7 @@ fun JuzSurahListScreen(navController: NavHostController, juzNumber: Int) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp)
+                    .height(125.dp)
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.headerbaground),
@@ -124,13 +124,13 @@ fun JuzSurahListScreen(navController: NavHostController, juzNumber: Int) {
                         Text(
                             text = surah.englishName,
                             style = MaterialTheme.typography.bodyMedium.copy(fontFamily = indonesiaFont),
-                            color = Color.Cyan,
+                            color = Color.Black,
                             modifier = Modifier.padding(top = 4.dp)
                         )
                         Text(
                             text = "${surah.revelationType} - ${surah.numberOfAyahs} ayat",
                             style = MaterialTheme.typography.bodySmall.copy(fontFamily = indonesiaFont),
-                            color = Color.Cyan,
+                            color = Color.Green,
                             modifier = Modifier.padding(top = 2.dp)
                         )
                     }

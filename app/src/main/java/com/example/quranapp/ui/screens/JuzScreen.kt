@@ -52,7 +52,7 @@ fun JuzScreen(navController: NavHostController) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(100.dp)
+                .height(125.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.headerbaground),
@@ -103,7 +103,12 @@ fun JuzScreen(navController: NavHostController) {
                     value = query,
                     onValueChange = { query = it },
                     modifier = Modifier.weight(1f),
-                    label = { Text("Cari Juz", style = MaterialTheme.typography.bodyMedium.copy(fontFamily = indonesiaFont)) }
+                    label = {
+                        Text(
+                            "Cari Juz",
+                            style = MaterialTheme.typography.bodyMedium.copy(fontFamily = indonesiaFont)
+                        )
+                    }
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Box {
@@ -111,7 +116,10 @@ fun JuzScreen(navController: NavHostController) {
                         onClick = { expanded = true },
                         modifier = Modifier.height(56.dp)
                     ) {
-                        Text(filterType, style = MaterialTheme.typography.bodyMedium.copy(fontFamily = indonesiaFont))
+                        Text(
+                            filterType,
+                            style = MaterialTheme.typography.bodyMedium.copy(fontFamily = indonesiaFont)
+                        )
                         Icon(Icons.Filled.ArrowDropDown, contentDescription = null)
                     }
                     DropdownMenu(
@@ -120,7 +128,12 @@ fun JuzScreen(navController: NavHostController) {
                     ) {
                         filterOptions.forEach { option ->
                             DropdownMenuItem(
-                                text = { Text(option, style = MaterialTheme.typography.bodyMedium.copy(fontFamily = indonesiaFont)) },
+                                text = {
+                                    Text(
+                                        option,
+                                        style = MaterialTheme.typography.bodyMedium.copy(fontFamily = indonesiaFont)
+                                    )
+                                },
                                 onClick = {
                                     filterType = option
                                     expanded = false
@@ -134,7 +147,9 @@ fun JuzScreen(navController: NavHostController) {
 
         // Juz list
         LazyColumn(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = 8.dp)
         ) {
             items(filteredJuzList) { juz ->
                 Card(
@@ -145,23 +160,73 @@ fun JuzScreen(navController: NavHostController) {
                             navController.navigate("juz_surah_list/${juz.number}")
                         },
                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.9f))
                 ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = "Juz ${juz.number}",
-                            style = MaterialTheme.typography.titleMedium.copy(fontFamily = indonesiaFont)
-                        )
-                        // Keterangan berdasarkan data dari allSurah
-                        val startSurah = allSurah.find { it.number == juz.startSurah }
-                        val endSurah = allSurah.find { it.number == juz.endSurah }
-                        Text(
-                            text = "Mulai: ${startSurah?.arabicName} (${startSurah?.name}) Ayat ${juz.startAyah}; " +
-                                    "Sampai: ${endSurah?.arabicName} (${endSurah?.name}) Ayat ${juz.endAyah}",
-                            style = MaterialTheme.typography.bodyMedium.copy(fontFamily = indonesiaFont),
-                            color = Color.DarkGray,
-                            modifier = Modifier.padding(top = 4.dp)
-                        )
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Number circle
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .size(40.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.bgnumber),
+                                contentDescription = "Background Number",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                            Text(
+                                text = juz.number.toString(),
+                                style = MaterialTheme.typography.labelMedium.copy(fontFamily = indonesiaFont),
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.width(16.dp))
+
+                        // Content
+                        Column {
+                            Text(
+                                text = "Juz ${juz.number}",
+                                style = MaterialTheme.typography.titleMedium.copy(
+                                    fontFamily = indonesiaFont,
+                                    color = Color(0xFF00796B)
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+
+                            val startSurah = allSurah.find { it.number == juz.startSurah }
+                            val endSurah = allSurah.find { it.number == juz.endSurah }
+
+                            // Start Surah info
+                            Text(
+                                text = "Mulai: ${startSurah?.arabicName}",
+                                style = MaterialTheme.typography.bodyMedium.copy(fontFamily = indonesiaFont),
+                                color = Color.DarkGray
+                            )
+                            Text(
+                                text = "(${startSurah?.name}) Ayat ${juz.startAyah}",
+                                style = MaterialTheme.typography.bodySmall.copy(fontFamily = indonesiaFont),
+                                color = Color(0xFF00796B)
+                            )
+
+                            Spacer(modifier = Modifier.height(4.dp))
+
+                            // End Surah info
+                            Text(
+                                text = "Sampai: ${endSurah?.arabicName}",
+                                style = MaterialTheme.typography.bodyMedium.copy(fontFamily = indonesiaFont),
+                                color = Color.DarkGray
+                            )
+                            Text(
+                                text = "(${endSurah?.name}) Ayat ${juz.endAyah}",
+                                style = MaterialTheme.typography.bodySmall.copy(fontFamily = indonesiaFont),
+                                color = Color(0xFF00796B)
+                            )
+                        }
                     }
                 }
             }
